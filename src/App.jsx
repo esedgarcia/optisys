@@ -45,19 +45,19 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 sm:p-6 lg:p-8">
       {/* Header with floating effect */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-lg mb-4 transform hover:scale-105 transition-transform duration-300">
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-700 via-emerald-700 to-teal-700 rounded-full shadow-lg mb-4 transform hover:scale-105 transition-transform duration-300">
           <Eye className="w-10 h-10 text-white" />
         </div>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 bg-clip-text text-transparent mb-2">
-          Historia Clínica Oftalmológica
+        <h1 className="text-4xl font-bold bg-gradient-to-r bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">
+          OptiSys
         </h1>
-        <p className="text-gray-600 text-lg">Sistema de Registro Médico Profesional</p>
-        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto mt-4 rounded-full"></div>
+        <p className="text-gray-600 text-lg">Sistema de Historias Clínicas oftálmicas</p>
+        <div className="w-24 h-1 bg-gradient-to-r from-green-700 via-emerald-700 to-teal-700 mx-auto mt-4 rounded-full"></div>
       </div>
 
       <div className="max-w-6xl mx-auto bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-2xl border border-white/50 space-y-8 relative overflow-hidden">
         {/* Decorative gradient overlay */}
-        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"></div>
+        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-500 to-emerald-500"></div>
         
         {/* Success animation */}
         {isSubmitted && (
@@ -386,7 +386,7 @@ function App() {
             className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-2xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300"
           >
             <Save className="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" />
-            Guardar Historia Clínica
+            Guardar
             <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
           </button>
         </div>
@@ -394,7 +394,7 @@ function App() {
 
       {/* Footer */}
       <div className="text-center mt-8 text-gray-500">
-        <p className="text-sm">Sistema de Historia Clínica Oftalmológica © 2025</p>
+        <p className="text-sm">OptiSys © 2025</p>
         <div className="flex items-center justify-center mt-2">
           <Eye className="w-4 h-4 mr-2" />
           <span className="text-xs">Cuidando tu visión con tecnología</span>
