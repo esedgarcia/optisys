@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import {
-  Eye, Users, FileBarChart, HeartHandshake
+  Eye, Users, FileBarChart, HeartHandshake, Calendar
 } from 'lucide-react';
 
 import './App.css';
 import CrearHistoria from './pages/CrearHistoria';
 import Pacientes from './pages/Pacientes';
+import Agenda from './pages/Agenda';
 import Reportes from './pages/Reportes';
 import Fidelizacion from './pages/Fidelizacion';
 
@@ -27,6 +28,9 @@ function App() {
           <button onClick={() => setCurrentView("pacientes")} className="flex items-center space-x-2 hover:text-emerald-200">
             <Users className="w-5 h-5" /> <span>Pacientes</span>
           </button>
+          <button onClick={() => setCurrentView("agenda")} className="flex items-center space-x-2 hover:text-emerald-200">
+            <Calendar className="w-5 h-5" /> <span>Agenda</span>
+          </button>
           <button onClick={() => setCurrentView("reportes")} className="flex items-center space-x-2 hover:text-emerald-200">
             <FileBarChart className="w-5 h-5" /> <span>Reportes</span>
           </button>
@@ -40,6 +44,7 @@ function App() {
       <main className="flex-1 bg-gray-50">
         {currentView === "formulario" && <CrearHistoria />}
         {currentView === "pacientes" && <Pacientes />}
+        {currentView === "agenda" && <Agenda />}
         {currentView === "reportes" && <Reportes />}
         {currentView === "fidelizacion" && <Fidelizacion />}
       </main>
@@ -48,8 +53,3 @@ function App() {
 }
 
 export default App;
-
-// src/App.jsx
-// Este archivo es el punto de entrada de la aplicación React.
-// Importa los componentes necesarios y define la estructura principal de la aplicación.
-// Utiliza un estado para manejar la vista actual y renderiza el componente correspondiente según la selección
