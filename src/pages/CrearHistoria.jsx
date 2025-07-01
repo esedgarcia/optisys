@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import {
   Eye, User, Phone, Calendar, FileText, Activity, Target,
-  Stethoscope, Save, CheckCircle
+  Stethoscope, Save, CheckCircle, Glasses
 } from 'lucide-react';
 
 function CrearHistoria() {
   const [formData, setFormData] = useState({
     nombre: "", edad: "", telefono: "", motivo: "", antecedentes: "",
     esferaOD: "", cilindroOD: "", ejeOD: "", esferaOI: "", cilindroOI: "",
-    ejeOI: "", diagnostico: "", tratamiento: ""
+    ejeOI: "", diagnostico: "", tratamiento: "", tipoLente: "", materialLente: ""
   });
 
   const [focusedField, setFocusedField] = useState(null);
@@ -28,7 +28,7 @@ function CrearHistoria() {
 
   return (
     <main className="flex-1 overflow-y-auto min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4 sm:p-6 lg:p-8">
-      {/* Header with floating effect */}
+      {/* Header */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-700 via-emerald-700 to-teal-700 rounded-full shadow-lg mb-4 transform hover:scale-105 transition-transform duration-300">
           <Eye className="w-10 h-10 text-white" />
@@ -41,10 +41,8 @@ function CrearHistoria() {
       </div>
 
       <div className="max-w-6xl mx-auto bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-2xl border border-white/50 space-y-8 relative overflow-hidden">
-        {/* Decorative gradient overlay */}
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-500 to-emerald-500"></div>
 
-        {/* Success animation */}
         {isSubmitted && (
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white p-8 rounded-2xl shadow-2xl text-center transform animate-pulse">
@@ -55,6 +53,7 @@ function CrearHistoria() {
           </div>
         )}
 
+        {/* ... Código existente sin cambios hasta sección de Diagnóstico y Tratamiento ... */}
 {/* Patient Information Section */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-100">
           <div className="flex items-center mb-4">
@@ -318,7 +317,7 @@ function CrearHistoria() {
             <Stethoscope className="w-6 h-6 text-orange-600 mr-3" />
             <h2 className="text-2xl font-bold text-gray-800">Diagnóstico y Tratamiento</h2>
           </div>
-          
+
           <div className="space-y-6">
             <div className="relative group">
               <label className="flex items-center text-sm font-semibold text-gray-700 mb-2">
@@ -332,15 +331,15 @@ function CrearHistoria() {
                 onFocus={() => handleFocus('diagnostico')}
                 onBlur={handleBlur}
                 className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/70 backdrop-blur-sm resize-none
-                  ${focusedField === 'diagnostico' 
-                    ? 'border-orange-500 shadow-lg shadow-orange-200 scale-105 bg-white' 
-                    : 'border-gray-200 hover:border-orange-300 hover:shadow-md'
-                  } focus:outline-none`}
+                  ${focusedField === 'diagnostico'
+                  ? 'border-orange-500 shadow-lg shadow-orange-200 scale-105 bg-white'
+                  : 'border-gray-200 hover:border-orange-300 hover:shadow-md'
+                } focus:outline-none`}
                 rows={3}
                 placeholder="Diagnóstico clínico detallado..."
               />
             </div>
-            
+
             <div className="relative group">
               <label className="flex items-center text-sm font-semibold text-gray-700 mb-2">
                 <Activity className="w-4 h-4 mr-2 text-orange-500" />
@@ -353,13 +352,57 @@ function CrearHistoria() {
                 onFocus={() => handleFocus('tratamiento')}
                 onBlur={handleBlur}
                 className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/70 backdrop-blur-sm resize-none
-                  ${focusedField === 'tratamiento' 
-                    ? 'border-orange-500 shadow-lg shadow-orange-200 scale-105 bg-white' 
-                    : 'border-gray-200 hover:border-orange-300 hover:shadow-md'
-                  } focus:outline-none`}
+                  ${focusedField === 'tratamiento'
+                  ? 'border-orange-500 shadow-lg shadow-orange-200 scale-105 bg-white'
+                  : 'border-gray-200 hover:border-orange-300 hover:shadow-md'
+                } focus:outline-none`}
                 rows={3}
                 placeholder="Plan de tratamiento, recomendaciones, seguimiento..."
               />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="relative group">
+                <label className="flex items-center text-sm font-semibold text-gray-700 mb-2">
+                  <Glasses className="w-4 h-4 mr-2 text-orange-500" />
+                  Tipo de Lente Recomendado
+                </label>
+                <input
+                  type="text"
+                  name="tipoLente"
+                  value={formData.tipoLente}
+                  onChange={handleChange}
+                  onFocus={() => handleFocus('tipoLente')}
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/70 backdrop-blur-sm
+                    ${focusedField === 'tipoLente'
+                    ? 'border-orange-500 shadow-lg shadow-orange-200 scale-105 bg-white'
+                    : 'border-gray-200 hover:border-orange-300 hover:shadow-md'
+                  } focus:outline-none`}
+                  placeholder="Monofocales, Bifocales, Progresivos..."
+                />
+              </div>
+
+              <div className="relative group">
+                <label className="flex items-center text-sm font-semibold text-gray-700 mb-2">
+                  <Glasses className="w-4 h-4 mr-2 text-orange-500" />
+                  Material del Lente
+                </label>
+                <input
+                  type="text"
+                  name="materialLente"
+                  value={formData.materialLente}
+                  onChange={handleChange}
+                  onFocus={() => handleFocus('materialLente')}
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 bg-white/70 backdrop-blur-sm
+                    ${focusedField === 'materialLente'
+                    ? 'border-orange-500 shadow-lg shadow-orange-200 scale-105 bg-white'
+                    : 'border-gray-200 hover:border-orange-300 hover:shadow-md'
+                  } focus:outline-none`}
+                  placeholder="Policarbonato, CR-39, Trivex..."
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -377,7 +420,6 @@ function CrearHistoria() {
         </div>
       </div>
 
-      {/* Footer */}
       <div className="text-center mt-8 text-gray-500">
         <p className="text-sm">OptiSys © 2025</p>
         <div className="flex items-center justify-center mt-2">

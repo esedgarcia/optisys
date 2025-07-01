@@ -9,7 +9,10 @@ const pacientesDummy = [
     telefono: "0991234567",
     ultimaConsulta: "2025-06-20",
     estado: "Activo",
-    medida: "OD: -1.00 -0.50 x 90°, OI: -0.75 -0.25 x 85°",
+    historial: [
+      { fecha: "2024-06-01", medida: "OD: -0.75 -0.50 x 90°, OI: -0.50 -0.25 x 85°" },
+      { fecha: "2025-06-20", medida: "OD: -1.00 -0.50 x 90°, OI: -0.75 -0.25 x 85°" }
+    ]
   },
   {
     id: 2,
@@ -19,7 +22,9 @@ const pacientesDummy = [
     telefono: "0987654321",
     ultimaConsulta: "2025-05-15",
     estado: "Activo",
-    medida: "OD: +0.50 -0.25 x 80°, OI: +0.75 -0.50 x 75°",
+    historial: [
+      { fecha: "2025-05-15", medida: "OD: +0.50 -0.25 x 80°, OI: +0.75 -0.50 x 75°" }
+    ]
   },
   {
     id: 3,
@@ -29,20 +34,33 @@ const pacientesDummy = [
     telefono: "0971122334",
     ultimaConsulta: "2025-06-01",
     estado: "Inactivo",
-    medida: "OD: -2.00 -1.00 x 100°, OI: -2.25 -1.25 x 95°",
+    historial: [
+      { fecha: "2025-06-01", medida: "OD: -2.00 -1.00 x 100°, OI: -2.25 -1.25 x 95°" }
+    ]
   },
 ];
 
 function Pacientes() {
   const [busqueda, setBusqueda] = useState("");
   const [pacienteSeleccionado, setPacienteSeleccionado] = useState(null);
+  const [modoEdicion, setModoEdicion] = useState(false);
+  const [pacienteEditando, setPacienteEditando] = useState(null);
 
-  const pacientesFiltrados = pacientesDummy.filter(
-    (p) =>
-      p.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-      p.telefono.includes(busqueda) ||
-      p.cedula.includes(busqueda)
+  const pacientesFiltrados = pacientesDummy.filter((p) =>
+    p.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+    p.telefono.includes(busqueda) ||
+    p.cedula.includes(busqueda)
   );
+
+  const handleEditar = (paciente) => {
+    setPacienteEditando({ ...paciente });
+    setModoEdicion(true);
+  };
+
+  const handleGuardarEdicion = () => {
+    console.log("Paciente actualizado:", pacienteEditando);
+    setModoEdicion(false);
+  };
 
   return (
     <div className="p-8 max-w-5xl mx-auto">
@@ -67,7 +85,7 @@ function Pacientes() {
             onClick={() => setPacienteSeleccionado(p)}
             className="cursor-pointer bg-white rounded-xl shadow-md p-5 flex justify-between items-center hover:shadow-lg transition-shadow duration-300"
           >
-            <div className="space-y-1">
+            <div>
               <p className="font-semibold text-lg text-teal-700">{p.nombre}</p>
               <p className="text-sm text-gray-600">Cédula: {p.cedula}</p>
               <p className="text-sm text-gray-600">Teléfono: {p.telefono}</p>
@@ -75,19 +93,24 @@ function Pacientes() {
             <div className="text-right space-y-1">
               <p className="text-sm text-gray-700">Edad: {p.edad}</p>
               <p className="text-sm text-gray-700">Última consulta: {p.ultimaConsulta}</p>
-              <p
-                className={`font-semibold ${
-                  p.estado === "Activo" ? "text-green-600" : "text-red-600"
-                }`}
-              >
+              <p className={`font-semibold ${p.estado === "Activo" ? "text-green-600" : "text-red-600"}`}>
                 {p.estado}
               </p>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditar(p);
+                }}
+                className="mt-2 px-3 py-1 bg-emerald-600 text-white text-sm rounded hover:bg-emerald-700"
+              >
+                Editar
+              </button>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Modal para mostrar detalle de medida */}
+      {/* Modal para historial de medidas */}
       {pacienteSeleccionado && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -104,21 +127,79 @@ function Pacientes() {
               &times;
             </button>
             <h3 className="text-2xl font-bold mb-4">{pacienteSeleccionado.nombre}</h3>
-            <p className="mb-2">
-              <strong>Cédula:</strong> {pacienteSeleccionado.cedula}
-            </p>
-            <p className="mb-2">
-              <strong>Teléfono:</strong> {pacienteSeleccionado.telefono}
-            </p>
-            <p className="mb-2">
-              <strong>Edad:</strong> {pacienteSeleccionado.edad}
-            </p>
-            <p className="mb-4">
-              <strong>Última Consulta:</strong> {pacienteSeleccionado.ultimaConsulta}
-            </p>
-            <p>
-              <strong>Medida:</strong> {pacienteSeleccionado.medida}
-            </p>
+            <p><strong>Cédula:</strong> {pacienteSeleccionado.cedula}</p>
+            <p><strong>Teléfono:</strong> {pacienteSeleccionado.telefono}</p>
+            <p><strong>Edad:</strong> {pacienteSeleccionado.edad}</p>
+            <p><strong>Última Consulta:</strong> {pacienteSeleccionado.ultimaConsulta}</p>
+            <h4 className="text-lg font-semibold mt-4 mb-2">Historial de Medidas:</h4>
+            <ul className="list-disc pl-5 space-y-1 text-gray-700">
+              {pacienteSeleccionado.historial.map((item, index) => (
+                <li key={index}><strong>{item.fecha}:</strong> {item.medida}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
+      {/* Modal para editar paciente */}
+      {modoEdicion && pacienteEditando && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={() => setModoEdicion(false)}
+        >
+          <div
+            className="bg-white rounded-2xl p-8 max-w-md w-full shadow-lg relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl font-bold"
+              onClick={() => setModoEdicion(false)}
+            >
+              &times;
+            </button>
+            <h3 className="text-2xl font-bold mb-4">Editar Paciente</h3>
+            <input
+              type="text"
+              value={pacienteEditando.nombre}
+              onChange={(e) => setPacienteEditando({ ...pacienteEditando, nombre: e.target.value })}
+              className="w-full mb-3 p-2 border rounded-lg"
+              placeholder="Nombre"
+            />
+            <input
+              type="text"
+              value={pacienteEditando.cedula}
+              onChange={(e) => setPacienteEditando({ ...pacienteEditando, cedula: e.target.value })}
+              className="w-full mb-3 p-2 border rounded-lg"
+              placeholder="Cédula"
+            />
+            <input
+              type="number"
+              value={pacienteEditando.edad}
+              onChange={(e) => setPacienteEditando({ ...pacienteEditando, edad: e.target.value })}
+              className="w-full mb-3 p-2 border rounded-lg"
+              placeholder="Edad"
+            />
+            <input
+              type="text"
+              value={pacienteEditando.telefono}
+              onChange={(e) => setPacienteEditando({ ...pacienteEditando, telefono: e.target.value })}
+              className="w-full mb-3 p-2 border rounded-lg"
+              placeholder="Teléfono"
+            />
+            <select
+              value={pacienteEditando.estado}
+              onChange={(e) => setPacienteEditando({ ...pacienteEditando, estado: e.target.value })}
+              className="w-full mb-4 p-2 border rounded-lg"
+            >
+              <option value="Activo">Activo</option>
+              <option value="Inactivo">Inactivo</option>
+            </select>
+            <button
+              onClick={handleGuardarEdicion}
+              className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700"
+            >
+              Guardar Cambios
+            </button>
           </div>
         </div>
       )}

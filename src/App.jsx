@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import {
-  Eye, Users, FileBarChart, HeartHandshake, Calendar
+  Eye, Users, FileBarChart, HeartHandshake, Calendar, FileText
 } from 'lucide-react';
 
 import './App.css';
 import CrearHistoria from './pages/CrearHistoria';
 import Pacientes from './pages/Pacientes';
+import OrdenLaboratorio from './pages/OrdenLaboratorio';
 import Agenda from './pages/Agenda';
 import Reportes from './pages/Reportes';
 import Fidelizacion from './pages/Fidelizacion';
@@ -22,19 +23,40 @@ function App() {
           <span className="text-2xl font-bold">OptiSys</span>
         </div>
         <nav className="space-y-4">
-          <button onClick={() => setCurrentView("formulario")} className="flex items-center space-x-2 hover:text-emerald-200">
+          <button
+            onClick={() => setCurrentView("formulario")}
+            className="flex items-center space-x-2 hover:text-emerald-200"
+          >
             <Eye className="w-5 h-5" /> <span>Crear Historia</span>
           </button>
-          <button onClick={() => setCurrentView("pacientes")} className="flex items-center space-x-2 hover:text-emerald-200">
+          <button
+            onClick={() => setCurrentView("pacientes")}
+            className="flex items-center space-x-2 hover:text-emerald-200"
+          >
             <Users className="w-5 h-5" /> <span>Pacientes</span>
           </button>
-          <button onClick={() => setCurrentView("agenda")} className="flex items-center space-x-2 hover:text-emerald-200">
+          <button
+            onClick={() => setCurrentView("orden-laboratorio")}
+            className="flex items-center space-x-2 hover:text-emerald-200"
+          >
+            <FileText className="w-5 h-5" /> <span>Orden de Laboratorio</span>
+          </button>
+          <button
+            onClick={() => setCurrentView("agenda")}
+            className="flex items-center space-x-2 hover:text-emerald-200"
+          >
             <Calendar className="w-5 h-5" /> <span>Agenda</span>
           </button>
-          <button onClick={() => setCurrentView("reportes")} className="flex items-center space-x-2 hover:text-emerald-200">
+          <button
+            onClick={() => setCurrentView("reportes")}
+            className="flex items-center space-x-2 hover:text-emerald-200"
+          >
             <FileBarChart className="w-5 h-5" /> <span>Reportes</span>
           </button>
-          <button onClick={() => setCurrentView("fidelizacion")} className="flex items-center space-x-2 hover:text-emerald-200">
+          <button
+            onClick={() => setCurrentView("fidelizacion")}
+            className="flex items-center space-x-2 hover:text-emerald-200"
+          >
             <HeartHandshake className="w-5 h-5" /> <span>Fidelización</span>
           </button>
         </nav>
@@ -44,6 +66,7 @@ function App() {
       <main className="flex-1 bg-gray-50">
         {currentView === "formulario" && <CrearHistoria />}
         {currentView === "pacientes" && <Pacientes />}
+        {currentView === "orden-laboratorio" && <OrdenLaboratorio />}
         {currentView === "agenda" && <Agenda />}
         {currentView === "reportes" && <Reportes />}
         {currentView === "fidelizacion" && <Fidelizacion />}
